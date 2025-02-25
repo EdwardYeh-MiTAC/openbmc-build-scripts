@@ -8,7 +8,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git'
+                // git branch: 'main', url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git'
+                git credentialsId: 'micgitlab-eyeh', url: 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git', branch: 'mitac_project_argus'
             }
         }
         stage('Install Dependencies') {
