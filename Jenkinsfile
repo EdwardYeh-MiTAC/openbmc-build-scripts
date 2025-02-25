@@ -9,7 +9,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 // git branch: 'main', url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git'
-                git credentialsId: 'micgitlab-eyeh', url: 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git', branch: 'mitac_project_argus'
+                // git credentialsId: 'micgitlab-eyeh', url: 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git', branch: 'mitac_project_argus'
+                git branch: '2.17.0-dev_B8261', url: 'https://github.com/EdwardYeh-MiTAC/openbmc.git'
             }
         }
         stage('Install Dependencies') {
