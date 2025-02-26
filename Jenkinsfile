@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        WORKSPACE = env.WORKSPACE
+        WORKSPACE = "workspace"
     }
 
     stages {
@@ -50,9 +50,9 @@ pipeline {
             steps {
                 // Upload artifacts to a repository or cloud storage
                 // Example using Artifactory or similar
-                def server = Artifactory.server "SERVER_ID"
-                def uploadSpec = '''{ "files": [ { "pattern": "build/*.tar", "target": "libs-snapshot-local" } ] }'''
-                def buildInfo = server.upload spec: uploadSpec
+//                def server = Artifactory.server "SERVER_ID"
+//                def uploadSpec = '''{ "files": [ { "pattern": "build/*.tar", "target": "libs-snapshot-local" } ] }'''
+//                def buildInfo = server.upload spec: uploadSpec
             }
         }
     }
