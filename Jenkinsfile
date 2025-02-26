@@ -56,7 +56,7 @@ pipeline {
 //                    credentialsId: 'your-credentials-id',
 //                    url: 'https://github.com/openbmc/openbmc-build-scripts.git',
                 git branch: 'main', 
-                    url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git'
+                    url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git',
                     changelog: false,
                     poll: false,
                     dir: 'openbmc-build-scripts'
