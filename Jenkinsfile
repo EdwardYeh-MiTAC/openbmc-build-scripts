@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     //sh 'sudo apt update && sudo apt install -y build-essential python3 python3-pip git'
-                    sh 'sudo apt update'
+                    sh 'apt update'
                 }
             }
         }
