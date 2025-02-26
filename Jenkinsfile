@@ -2,56 +2,66 @@ pipeline {
     agent any
 
     environment {
-        WORKSPACE = "workspace"
+        GIT_REPO_URL = 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git'
+        GIT_BRANCH = 'mitac_project_argus'
+        GIT_CREDENTIALS_ID = 'micgitlab-eyeh'
+        BUILD_MACHINE = 'ubuntu:24.04' 
+        CLOUD_STORAGE_PATH = '/data/cloud-storage/' 
     }
 
     stages {
-        stage('Clone OpenBMC Repository') {
+        stage('Checkout Code') {
             steps {
-//                git branch: 'main',
-//                    credentialsId: 'your-credentials-id',
-//                    url: 'https://github.com/openbmc/openbmc.git'
-//                git branch: '2.17.0-dev_B8261', url: 'https://github.com/EdwardYeh-MiTAC/openbmc.git'
-                git branch: 'mitac_project_argus',
-                    credentialsId: 'micgitlab-eyeh',
-                    url: 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git'
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: env.GIT_BRANCH]],
+                        userRemoteConfigs: [[
+                            url: env.GIT_REPO_URL,
+                            credentialsId: env.GIT_CREDENTIALS_ID
+                        ]]
+                    ])
+                }
             }
         }
-        stage('Checkout Build Scripts') {
+
+        stage('Setup Build Environment') {
             steps {
-//                git branch: 'main',
-//                    credentialsId: 'your-credentials-id',
-//                    url: 'https://github.com/openbmc/openbmc-build-scripts.git',
-                git branch: 'mitac_project_argus', 
-                    url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git',
-                    changelog: false,
-                    poll: false
+                script {
+                    sh 'sudo apt update && sudo apt install -y build-essential python3 python3-pip git'
+                }
             }
         }
+
         stage('Build OpenBMC') {
             steps {
-                sh '''
-                    export LANG=en_US.UTF8
-                    cd "${WORKSPACE}"
-                    if [ -d openbmc ]; then
-                        git -C openbmc fetch
-                        git -C openbmc rebase
-                    else
-                        git clone https://edward.yeh:glpat-XWSNqanryGTScXwEXWXR@micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git
-                    fi
-                    export build_dir="${WORKSPACE}/build"
-                    # Run your build script here
-                    "${WORKSPACE}/openbmc-build-scripts/build-setup.sh"
-                '''
+                script {
+                    sh '''
+                    source oe-init-build-env
+                    bitbake obmc-phosphor-image
+                    '''
+                }
+            }
+        }
+
+        stage('Upload to Cloud') {
+            steps {
+                script {
+                    sh '''
+                    mkdir -p ${CLOUD_STORAGE_PATH}
+                    cp build/tmp/deploy/images/*/*.wic ${CLOUD_STORAGE_PATH}
+                    '''
+                }
             }
         }
     }
+
     post {
         success {
-            echo 'Build and upload successful'
+            echo 'Build and upload completed successfully!'
         }
         failure {
-            echo 'Build or upload failed'
+            echo 'Build failed! Please check logs.'
         }
     }
 }
