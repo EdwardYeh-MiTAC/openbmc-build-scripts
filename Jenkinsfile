@@ -25,8 +25,7 @@ pipeline {
                 git branch: 'mitac_project_argus', 
                     url: 'https://github.com/EdwardYeh-MiTAC/openbmc-build-scripts.git',
                     changelog: false,
-                    poll: false,
-                    dir: 'openbmc-build-scripts'
+                    poll: false
             }
         }
         stage('Build OpenBMC') {
@@ -50,7 +49,7 @@ pipeline {
             steps {
                 // Upload artifacts to a repository or cloud storage
                 // Example using Artifactory or similar
-//                def server = Artifactory.server "SERVER_ID"
+                def server = Artifactory.server "10.99.15.181"
 //                def uploadSpec = '''{ "files": [ { "pattern": "build/*.tar", "target": "libs-snapshot-local" } ] }'''
 //                def buildInfo = server.upload spec: uploadSpec
             }
