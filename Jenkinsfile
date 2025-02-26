@@ -8,6 +8,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'micgitlab-eyeh'
         BUILD_MACHINE = 'ubuntu:24.04' 
         CLOUD_STORAGE_PATH = '/data/cloud-storage/' 
+        GIT_SSH = '/usr/bin/ssh'
     }
 
     stages {
