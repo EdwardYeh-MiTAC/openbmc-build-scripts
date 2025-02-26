@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build OpenBMC') {
             steps {
-                sh 'export http_proxy="http://10.99.15.181:3128" && . setup b8261 && time bitbake obmc-phosphor-image && ls tmp/deploy/images/b8261/image-*'
+                bash 'export http_proxy="http://10.99.15.181:3128" && source setup b8261 && time bitbake obmc-phosphor-image && ls tmp/deploy/images/b8261/image-*'
             }
         }
         stage('Publish Artifacts') {
