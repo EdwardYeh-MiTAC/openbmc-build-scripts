@@ -15,12 +15,12 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'apt-get update && apt-get install -y git build-essential'
+                // sh 'apt-get update && apt-get install -y git build-essential'
             }
         }
         stage('Build OpenBMC') {
             steps {
-                sh 'cd openbmc && source setup b8261 && time bitbake obmc-phosphor-image && ls tmp/deploy/images/b8261/image-*'
+                sh 'export http_proxy="http://10.99.15.181:3128" && cd openbmc && source setup b8261 && time bitbake obmc-phosphor-image && ls tmp/deploy/images/b8261/image-*'
             }
         }
         stage('Publish Artifacts') {
