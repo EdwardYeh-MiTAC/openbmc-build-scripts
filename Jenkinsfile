@@ -16,6 +16,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // sh 'apt-get update && apt-get install -y git build-essential'
+                sh 'apt-get update && apt-get install -y git'
             }
         }
         stage('Build OpenBMC') {
