@@ -5,7 +5,7 @@ pipeline {
 //        GIT_REPO_URL = 'https://micgitlab1.mic.com.tw/beoc/solution-enabling/openbmc/openbmc.git'
         GIT_REPO_URL = 'ssh://git@micgitlab1-ssh.mic.com.tw:1022/beoc/solution-enabling/openbmc/openbmc.git'
         GIT_BRANCH = 'mitac_project_argus'
-        GIT_CREDENTIALS_ID = 'micgitlab-eyeh'
+//        GIT_CREDENTIALS_ID = 'micgitlab-eyeh'
         BUILD_MACHINE = 'ubuntu:24.04' 
         CLOUD_STORAGE_PATH = '/data/cloud-storage/' 
     }
