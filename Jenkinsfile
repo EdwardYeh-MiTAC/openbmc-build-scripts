@@ -20,10 +20,7 @@ pipeline {
         }
         stage('Build OpenBMC') {
             steps {
-                cd openbmc
-                source setup b8261
-                time bitbake obmc-phosphor-image 
-                ls tmp/deploy/images/b8261/image-*
+                sh 'cd openbmc && source setup b8261 && time bitbake obmc-phosphor-image && ls tmp/deploy/images/b8261/image-*'
             }
         }
         stage('Publish Artifacts') {
